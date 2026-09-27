@@ -1,0 +1,9 @@
+pyinstaller==6.16.0
+pywin32==311
+pillow==11.3.0
+rapidocr-onnxruntime==1.4.4
+onnxruntime==1.20.1
+numpy==1.26.4
+opencv-python==4.10.0.84
+pytest==8.4.2
+openpyxl==3.1.5

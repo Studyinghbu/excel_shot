@@ -1,0 +1,17 @@
+# Local Python/packaging state
+.venv/
+__pycache__/
+**/__pycache__/
+.pytest_cache/
+build/
+dist/
+
+# Runtime output; screenshots stay on the user's machine
+shot/
+
+# Local scratch files
+*.log
+README.stub
+
+# The root copy is convenient locally; the tracked distributable is under release/
+/ExcelCellShot.exe
