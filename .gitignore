@@ -15,3 +15,5 @@ README.stub
 
 # The root copy is convenient locally; the tracked distributable is under release/
 /ExcelCellShot.exe
+
+/BrowserScreenShot.exe
