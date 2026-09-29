@@ -221,6 +221,14 @@ def align_vertical(
     second_score = competitor[1] if competitor else float("inf")
     margin = ((second_score - best_score) / max(second_score, 1e-6)) if np.isfinite(second_score) else 1.0
     ocr_delta = _ocr_shift(ocr_previous, ocr_current)
+    # When several pixel candidates tie (periodic grid lines), a unique OCR
+    # displacement may choose the matching candidate.  Only accept it when
+    # its image score is effectively tied; OCR cannot override a bad image.
+    if ocr_delta is not None:
+        ocr_candidate = min(ordered, key=lambda pair: abs(pair[0] - ocr_delta))
+        if (abs(float(ocr_candidate[0]) - ocr_delta) <= max(4.0, height * 0.02)
+                and ocr_candidate[1] <= best_score + max(0.005, abs(best_score) * 0.25)):
+            best_shift, best_score = ocr_candidate
 
     errors = np.mean((first[best_shift:] - second[:-best_shift]) ** 2, axis=1)
     q75 = float(np.quantile(errors, 0.75))
@@ -259,6 +267,7 @@ def extract_novel_strip(image: Any, alignment: AlignmentResult) -> np.ndarray:
 
 
 __all__ = ["AlignmentError", "AlignmentResult", "align_vertical", "extract_novel_strip"]
+
 
 
 
